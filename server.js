@@ -139,7 +139,7 @@ server.put('/api/projects/:id', (req, res) => {
         res.json({ message: "The projects information could not be changed."})
     })
    })
-   server.delete('/api/projects/:id', (req, res) => {
+server.delete('/api/projects/:id', (req, res) => {
     const { id } = req.params;
     projects
     .remove(id)
@@ -151,4 +151,18 @@ server.put('/api/projects/:id', (req, res) => {
         res.json({ message: "The projects information could not be deleted."})
     }) 
     })
+server.get('/api/projects/:id/actions', (req, res) => {
+    const { id } = req.params;
+    projects
+    .getProjectActions(id)    
+    .then(actions => {
+        res.json({ actions })
+
+    })
+    .catch(error => {
+        res.status(500)
+        res.json({ message: "The project actions information could not be retrieved."})
+    })
+}) 
+
 server.listen(port, () => console.log(`Server running on port ${port}`));
